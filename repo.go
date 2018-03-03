@@ -9,9 +9,10 @@ type Repo struct {
     path string
 }
 
+    
+// Return current head info: branch, author,
+// message. 
 func (r Repo) GetHeadInfo() map[string]string {
-    // Return current head info: branch, author,
-    // message. 
     info := make(map[string]string)
 
 	repo, _ := git.PlainOpen(r.path)
