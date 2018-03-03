@@ -33,8 +33,6 @@ func ReposInfo(w http.ResponseWriter, r *http.Request, vars httprouter.Params) {
 		info = append(info, *repo.GetHeadInfo())
 	}
 
-	log.Printf("", info)
-    
 	jsonString, err := json.Marshal(info)
 	CheckIfError(err, w)
 
