@@ -19,13 +19,22 @@ type HeadInfo struct {
 // message. 
 func (r Repo) GetHeadInfo() *HeadInfo {
 
-	repo, _ := git.PlainOpen(r.path)
+	hi := HeadInfo{Branch: "None", Author: "None", Msg: "None"}
+
+	repo, err := git.PlainOpen(r.path)
+
+	if err != nil {
+        hi.Branch = r.path
+        hi.Author = err.Error()
+        hi.Msg = err.Error()
+		return &hi
+	}
+
 	head, _ := repo.Head()
 	commit, _ := repo.CommitObject(head.Hash())
 
     headReference := head.Name()
 
-	hi := HeadInfo{Branch: "None", Author: "None", Msg: "None"}
 
     if headReference.IsBranch() {
         hi.Branch = headReference.Short()
