@@ -12,6 +12,8 @@ func main() {
 	for _, repoPath := range conf.Repos {
 		repo := Repo{path: repoPath}
 
-		fmt.Println("", repo.GetHeadInfo())
+		fmt.Println("Branch: ", repo.GetHeadInfo()["branch"])
+		fmt.Println("author: ", repo.GetHeadInfo()["author"])
+		fmt.Println("message: ", repo.GetHeadInfo()["message"])
 	}
 }

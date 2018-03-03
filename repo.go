@@ -22,13 +22,13 @@ func (r Repo) GetHeadInfo() map[string]string {
     headReference := head.Name()
 
     if headReference.IsBranch() {
-        info["Branch"] = headReference.Short()
+        info["branch"] = headReference.Short()
     } else {
-        info["Branch"] = fmt.Sprintf("%s (Head detached)", head.Hash())
+        info["branch"] = fmt.Sprintf("%s (Head detached)", head.Hash())
     }
 
-    info["Author"] = commit.Author.Name
-    info["Message"] = commit.Message
+    info["author"] = commit.Author.Name
+    info["message"] = commit.Message
 
     return info
 }
