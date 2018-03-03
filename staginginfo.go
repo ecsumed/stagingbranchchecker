@@ -7,12 +7,11 @@ import (
 func main() {
     args := parseFlags()
 
+    conf := parseConfig(args)
 
-    fmt.Print("Conf File: %s", args["confFile"])
+	for _, repoPath := range conf.Repos {
+		repo := Repo{path: repoPath}
 
-	repoPath := "/tmp/test"
-
-    repo := Repo{path: repoPath}
-
-    fmt.Print("%s", repo.GetHeadInfo())
+		fmt.Println("", repo.GetHeadInfo())
+	}
 }
