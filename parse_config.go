@@ -12,23 +12,25 @@ type Configuration struct {
     Port    int
 }
 
+type Args struct {
+	conf string
+}
 
 // Parse flags
-func parseFlags() map[string]string {
-    args := make(map[string]string)
+func parseFlags() *Args {
 
     confFile := flag.String("conf", "config.json", "Config file path")
     
     flag.Parse()
 
-    args["confFile"] = *confFile
+	args := Args{conf: *confFile}
 
-    return args
+    return &args
 }
 
 // Parse config
-func parseConfig(args map[string]string) *Configuration {
-    file, _ := os.Open(args["confFile"])
+func parseConfig(args *Args) *Configuration {
+    file, _ := os.Open(args.conf)
     decoder := json.NewDecoder(file)
     configuration := Configuration{}
     err := decoder.Decode(&configuration)

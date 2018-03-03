@@ -9,11 +9,15 @@ type Repo struct {
     path string
 }
 
+type HeadInfo struct {
+    Branch string
+    Author string
+    Msg string
+}
     
 // Return current head info: branch, author,
 // message. 
-func (r Repo) GetHeadInfo() map[string]string {
-    info := make(map[string]string)
+func (r Repo) GetHeadInfo() *HeadInfo {
 
 	repo, _ := git.PlainOpen(r.path)
 	head, _ := repo.Head()
@@ -21,14 +25,16 @@ func (r Repo) GetHeadInfo() map[string]string {
 
     headReference := head.Name()
 
+	hi := HeadInfo{Branch: "None", Author: "None", Msg: "None"}
+
     if headReference.IsBranch() {
-        info["branch"] = headReference.Short()
+        hi.Branch = headReference.Short()
     } else {
-        info["branch"] = fmt.Sprintf("%s (Head detached)", head.Hash())
+        hi.Branch = fmt.Sprintf("%s (Head detached)", head.Hash())
     }
 
-    info["author"] = commit.Author.Name
-    info["message"] = commit.Message
+    hi.Author = commit.Author.Name
+    hi.Msg = commit.Message
 
-    return info
+    return &hi
 }
